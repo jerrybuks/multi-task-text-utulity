@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { AppController } from './app.controller';
@@ -8,6 +8,7 @@ import { CircuitBreakerService } from './services/circuit-breaker.service';
 import { MetricsService } from './services/metrics.service';
 import { MetricsController } from './controllers/metrics.controller';
 import { CacheService } from './services/cache.service';
+import { SafetyModerationMiddleware } from './middleware/safety-moderation.middleware';
 
 @Module({
   imports: [
@@ -36,4 +37,10 @@ import { CacheService } from './services/cache.service';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(SafetyModerationMiddleware)
+      .forRoutes('assistant/query');
+  }
+}

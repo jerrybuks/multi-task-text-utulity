@@ -4,7 +4,7 @@ Analyze the customer's query and provide:
 2. Recommended actions
 3. A brief, professional response
 
-NB: If the user asks a question outside of customer support, respond letting the user know you can only assist with customer support queries.
+Note: If the user asks a question outside of customer support related to our product, respond letting the user know you can only assist with customer support queries.
 
 Return your response as valid JSON with this structure:
 {

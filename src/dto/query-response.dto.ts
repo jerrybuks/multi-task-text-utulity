@@ -56,13 +56,13 @@ export class ActionDto {
  */
 export class MetricsDto {
   @ApiProperty({
-    description: 'Number of tokens consumed for the query/response',
+    description: 'Total number of tokens consumed for the query/response',
     example: 150,
     minimum: 1,
   })
   @IsNumber()
   @IsPositive()
-  tokens!: number;
+  total_tokens!: number;
 
   @ApiProperty({
     description: 'Latency observed for the request in milliseconds',

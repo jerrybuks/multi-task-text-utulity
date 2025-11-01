@@ -56,7 +56,7 @@ export class AppService {
       // Construct the response
       const confidence = typeof response.content.confidence === 'number' ? response.content.confidence : 0.5;
       const metrics = {
-        tokens: response.usage.total_tokens,
+        total_tokens: response.usage.total_tokens,
         tokens_prompt: response.usage.prompt_tokens || 0,
         tokens_completion: response.usage.completion_tokens || 0,
         latencyMs: response.latencyMs,
@@ -68,7 +68,7 @@ export class AppService {
         await this.metricsService.record({
           timestamp: new Date().toISOString(),
           latencyMs: metrics.latencyMs,
-          tokens: metrics.tokens,
+          total_tokens: metrics.total_tokens,
           tokens_prompt: metrics.tokens_prompt,
           tokens_completion: metrics.tokens_completion,
           costUsd: metrics.estimatedUsd,
@@ -88,7 +88,7 @@ export class AppService {
         confidence,
         recommendedActions: response.content.recommendedActions,
         metrics: {
-          tokens: metrics.tokens,
+          total_tokens: metrics.total_tokens,
           latencyMs: metrics.latencyMs,
           estimatedUsd: metrics.estimatedUsd,
         },
@@ -106,7 +106,7 @@ export class AppService {
         await this.metricsService.record({
           timestamp: new Date().toISOString(),
           latencyMs: 0,
-          tokens: 0,
+          total_tokens: 0,
           tokens_prompt: 0,
           tokens_completion: 0,
           costUsd: 0,
