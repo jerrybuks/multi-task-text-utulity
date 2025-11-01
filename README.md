@@ -1,6 +1,19 @@
 # Multi-Task Text Utility
+### AI-Powered Support Assistant for Crypto Exchange Product
 
-A specialized NestJS-based API designed to enhance cryptocurrency exchange customer support through AI-powered text processing. Built with industry-specific knowledge, it helps support teams quickly analyze, categorize, and respond to crypto-related queries while maintaining compliance and security standards. The service features rate limiting, retry eith exponential back off, safety moderation (seperate channels with tag and PII redacting), and metrics trakcing with insights.
+> **Context**: An engineer on a product team building a helper for customer-support agents. The helper must return a concise JSON response for any incoming question so downstream systems can display an answer, a confidence estimate, and recommended actions. [**Product was assumed to be a  Crypto Exchange**]
+
+## Result
+A production-ready NestJS API designed to augment customer support workflows with AI-powered response processing. It transforms support queries into structured JSON responses with dynamic confidence scoring, recommended actions, and comprehensive safety checks. Built with enterprise-grade features including:
+
+- **Intelligent Processing**: LLM-powered response generation with dynamic confidence scoring
+- **Enterprise Security**: Multi-layer safety system with PII redaction, content moderation, and channel-specific safety tags
+- **Reliability**: Idempotent operations with caching, exponential backoff retry mechanism, and rate limiting
+- **Observability**: Per-query metrics tracking for tokens, latency, and cost estimates
+- **Validation**: JSON schema validation, input size verification, and adversarial prompt detection
+- **E2E Tests**: end-to-end test implemented for each of the enpoints to cover a variety of use cases
+
+The service provides a consistent, secure, and monitored interface between support systems and AI models, with built-in safeguards and comprehensive usage analytics.
 
 ## Key Features
 
@@ -15,11 +28,7 @@ A specialized NestJS-based API designed to enhance cryptocurrency exchange custo
 - **Status Page**: [https://stats.uptimerobot.com/5z2EBCHShQ](https://stats.uptimerobot.com/5z2EBCHShQ)
 - **Metrics UI**: [https://multi-task-text-utulity.onrender.com/metrics](https://multi-task-text-utulity.onrender.com/metrics)
 
-> **Note**: This service is deployed on Render's free tier. The server may be unavailable sometimes due to the free tier limitations. Please check the status page for real-time availability information.
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+> **Note**: This service is deployed on Render's free tier. The server may be unavailable sometimes due to the free tier limitations. Please check the status page for real-time availability information. If render server is alseep, please give like it 2 minutes and reload 
 
 ## Installation
 
@@ -58,9 +67,31 @@ $ yarn run start:prod
 # unit tests
 $ yarn run test
 
-# e2e tests - E2E implemented and working for all endoints in /test folder
+# e2e tests -  implemented and working for all endoints in /test folder
 $ yarn run test:e2e  
 
 # test coverage
 $ yarn run test:cov
 ```
+
+## Known Limitations
+
+### Data Persistence
+- **File-based Cache**: 
+  - Cache data is stored in memory and file system
+  - Cache is cleared on server restart
+  - New deployments will reset the cache
+
+### Metrics Storage
+- **In-Memory Metrics**: 
+  - All metrics are stored in-memory
+  - Metrics data is reset when server restarts
+  - Historical data is not preserved across deployments
+  - The `/metrics` endpoint shows data only since last restart
+
+### Deployment
+- Hosted on Render free tier
+- Subject to cold starts
+- Server sleeps after inactivity
+- 2-minute warm-up time may be needed
+- Have tried to mitiage this using ```uptimerobot``` that pings my server every 5 minutes, but does not guarnatee 100%
