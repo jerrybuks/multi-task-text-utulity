@@ -11,7 +11,7 @@ import { CircuitBreakerService } from './circuit-breaker.service';
 export class LLMService {
   private readonly openai: OpenAI;
   private readonly defaultConfig: LLMConfig = {
-    model: 'gpt-4o-mini',
+    model: 'openai/gpt-4o-mini',
     temperature: 0.7,
     max_tokens: 250,
   };
@@ -20,9 +20,9 @@ export class LLMService {
     private configService: ConfigService,
     private circuitBreakerService: CircuitBreakerService,
   ) {
-    const apiKey = this.configService.get<string>('OPENAI_ROUTER_API_KEY');
+    const apiKey = this.configService.get<string>('OPENROUTER_API_KEY');
     if (!apiKey) {
-      throw new Error('OPENAI_ROUTER_API_KEY is not defined in environment variables');
+      throw new Error('OPENROUTER_API_KEY is not defined in environment variables');
     }
 
     this.openai = new OpenAI({
