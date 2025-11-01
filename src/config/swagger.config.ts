@@ -11,7 +11,6 @@ export function setupSwagger(app: INestApplication): void {
     .setDescription(' AI Helper for customer-support agents for Cryptoexchange product')
     .setVersion('1.0')
     .addTag('assistant')
-    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

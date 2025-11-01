@@ -7,6 +7,7 @@ import { LLMService } from './services/llm.service';
 import { CircuitBreakerService } from './services/circuit-breaker.service';
 import { MetricsService } from './services/metrics.service';
 import { MetricsController } from './controllers/metrics.controller';
+import { HealthController } from './controllers/health.controller';
 import { CacheService } from './services/cache.service';
 import { SafetyModerationMiddleware } from './middleware/safety-moderation.middleware';
 
@@ -24,7 +25,7 @@ import { SafetyModerationMiddleware } from './middleware/safety-moderation.middl
       ],
     }),
   ],
-  controllers: [AppController, MetricsController],
+  controllers: [AppController, MetricsController, HealthController],
   providers: [
     AppService,
     LLMService,
