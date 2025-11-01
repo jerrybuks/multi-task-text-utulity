@@ -5,7 +5,7 @@ import * as path from 'path';
 export interface MetricEntry {
   timestamp: string; // ISO
   latencyMs: number;
-  tokens: number;
+  total_tokens: number;
   tokens_prompt: number;
   tokens_completion: number;
   costUsd: number;
@@ -90,7 +90,7 @@ export class MetricsService implements OnModuleInit {
       return arr.length % 2 === 0 ? (arr[mid - 1] + arr[mid]) / 2 : arr[mid];
     })();
 
-    const totalTokens = records.reduce((s, r) => s + (r.tokens || 0), 0);
+    const totalTokens = records.reduce((s, r) => s + (r.total_tokens || 0), 0);
     const totalPrompt = records.reduce((s, r) => s + (r.tokens_prompt || 0), 0);
     const totalCompletion = records.reduce((s, r) => s + (r.tokens_completion || 0), 0);
     const totalCost = records.reduce((s, r) => s + (r.costUsd || 0), 0);

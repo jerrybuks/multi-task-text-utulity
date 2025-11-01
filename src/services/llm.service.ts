@@ -33,8 +33,9 @@ export class LLMService {
 
   async loadPrompt(promptName: string): Promise<string> {
     try {
-  const promptPath = path.join(process.cwd(), 'prompts', `${promptName}.prompt.txt`);
-      return await fs.readFile(promptPath, 'utf-8');
+      const promptPath = path.join(process.cwd(), 'prompts', `${promptName}.prompt.txt`);
+      const content = await fs.readFile(promptPath, 'utf-8');
+      return `<system-rules>${content}</system-rules>`;
     } catch (error) {
       throw new Error(`Failed to load prompt ${promptName}: ${error.message}`);
     }
@@ -70,7 +71,6 @@ export class LLMService {
       });
 
       const endTime = Date.now();
-
       return {
         content: JSON.parse(completion.choices[0].message.content || '{}') as T,
         usage: {
