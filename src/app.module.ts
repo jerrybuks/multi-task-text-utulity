@@ -7,6 +7,7 @@ import { LLMService } from './services/llm.service';
 import { CircuitBreakerService } from './services/circuit-breaker.service';
 import { MetricsService } from './services/metrics.service';
 import { MetricsController } from './controllers/metrics.controller';
+import { CacheService } from './services/cache.service';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MetricsController } from './controllers/metrics.controller';
     LLMService,
     CircuitBreakerService,
     MetricsService,
+    CacheService,
     {
       provide: 'APP_GUARD',
       useClass: ThrottlerGuard,

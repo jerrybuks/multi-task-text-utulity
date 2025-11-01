@@ -28,16 +28,24 @@ export class ActionDto {
   @ApiProperty({
     description: 'Type of action to be taken',
     example: 'reply',
-    enum: ['reply', 'escalate', 'suggest_knowledge_base', 'check_transaction', 'verify_address', 'monitor_network_status']
+    enum: [
+      'reply',
+      'escalate',
+      'suggest_knowledge_base',
+      'check_transaction',
+      'verify_address',
+      'monitor_network_status',
+    ],
   })
   @IsString()
   type!: string;
 
   @ApiPropertyOptional({
     description: 'Additional data needed for the action',
-    example: { 
-      suggestedReply: "Transaction confirmed on blockchain (150+ confirmations). Please check your wallet sync status and verify on TRONSCAN: abc123. Contact us if funds don't appear after wallet sync.",
-    }
+    example: {
+      suggestedReply:
+        "Transaction confirmed on blockchain (150+ confirmations). Please check your wallet sync status and verify on TRONSCAN: abc123. Contact us if funds don't appear after wallet sync.",
+    },
   })
   @IsOptional()
   payload?: Record<string, unknown>;
@@ -50,7 +58,7 @@ export class MetricsDto {
   @ApiProperty({
     description: 'Number of tokens consumed for the query/response',
     example: 150,
-    minimum: 1
+    minimum: 1,
   })
   @IsNumber()
   @IsPositive()
@@ -59,7 +67,7 @@ export class MetricsDto {
   @ApiProperty({
     description: 'Latency observed for the request in milliseconds',
     example: 420,
-    minimum: 1
+    minimum: 1,
   })
   @IsNumber()
   @IsPositive()
@@ -68,7 +76,7 @@ export class MetricsDto {
   @ApiProperty({
     description: 'Estimated USD cost for this query',
     example: 0.002,
-    minimum: 0
+    minimum: 0,
   })
   @IsNumber()
   @Min(0)
@@ -89,9 +97,18 @@ export class MetricsDto {
  * }
  */
 export class QueryResponseDto {
+  @ApiPropertyOptional({
+    description: 'Unique identifier for the message, used for caching',
+    example: '7f8e9d3a2b1c',
+  })
+  @IsOptional()
+  @IsString()
+  messageId: string;
+
   @ApiProperty({
     description: 'Analysis and recommended response for the customer query',
-    example: 'Withdrawal W-45678 confirmed on TRC20. 150+ confirmations. Wallet sync delay likely. Address valid.'
+    example:
+      'Withdrawal W-45678 confirmed on TRC20. 150+ confirmations. Wallet sync delay likely. Address valid.',
   })
   @IsString()
   answer!: string;
@@ -100,7 +117,7 @@ export class QueryResponseDto {
     description: 'Confidence score for the analysis and recommendation (0-1)',
     minimum: 0,
     maximum: 1,
-    example: 0.95
+    example: 0.95,
   })
   @IsNumber()
   @Min(0)
@@ -109,7 +126,7 @@ export class QueryResponseDto {
 
   @ApiProperty({
     description: 'List of recommended actions based on the query and response',
-    type: [ActionDto]
+    type: [ActionDto],
   })
   @IsArray()
   @ValidateNested({ each: true })
@@ -118,7 +135,7 @@ export class QueryResponseDto {
 
   @ApiProperty({
     description: 'Usage metrics for monitoring and billing',
-    type: MetricsDto
+    type: MetricsDto,
   })
   @ValidateNested()
   @Type(() => MetricsDto)
@@ -126,9 +143,9 @@ export class QueryResponseDto {
 
   @ApiPropertyOptional({
     description: 'ISO timestamp when the response was generated',
-    example: '2025-10-31T12:00:00Z'
+    example: '2025-10-31T12:00:00Z',
   })
   @IsOptional()
   @IsISO8601()
-  timestamp?: string;
+  timestamp: string;
 }

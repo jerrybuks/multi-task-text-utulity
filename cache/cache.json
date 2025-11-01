@@ -1,0 +1,25 @@
+[
+  {
+    "messageId": "05b9c8666f46d9878173d0cf0a5eb264150eb8d6b0da5d4b46ccb1777b2fbb86",
+    "response": {
+      "messageId": "05b9c8666f46d9878173d0cf0a5eb264150eb8d6b0da5d4b46ccb1777b2fbb86",
+      "answer": "The user is inquiring about the amount needed to stake on the Polygon network.",
+      "confidence": 1,
+      "recommendedActions": [
+        {
+          "type": "provide_information",
+          "payload": {
+            "suggestedReply": "To stake on the Polygon network, the amount required varies depending on the specific staking service or platform you choose. You can check the staking requirements directly on the staking platform's website or reach out to their customer support for detailed information."
+          }
+        }
+      ],
+      "metrics": {
+        "tokens": 287,
+        "latencyMs": 5404,
+        "estimatedUsd": 0.000287
+      },
+      "timestamp": "2025-11-01T10:08:52.477Z"
+    },
+    "timestamp": "2025-11-01T10:08:52.477Z"
+  }
+]
