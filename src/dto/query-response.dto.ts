@@ -36,41 +36,7 @@ export class ActionDto {
   @ApiPropertyOptional({
     description: 'Additional data needed for the action',
     example: { 
-      transactionDetails: {
-        withdrawalId: "W-45678",
-        txId: "abc123",
-        network: "TRC20",
-        asset: "USDT",
-        amount: "1000",
-        status: "completed",
-        confirmations: 150,
-        timestamp: "2025-10-31T10:15:23Z"
-      },
-      networkStatus: {
-        name: "TRON",
-        status: "operational",
-        averageBlockTime: "3s",
-        congestion: "low"
-      },
       suggestedReply: "Transaction confirmed on blockchain (150+ confirmations). Please check your wallet sync status and verify on TRONSCAN: abc123. Contact us if funds don't appear after wallet sync.",
-      knowledgeBaseArticles: [
-        {
-          id: "kb-789",
-          title: "Understanding Crypto Withdrawal Processing Times",
-          relevance: 0.95
-        },
-        {
-          id: "kb-101",
-          title: "How to Track Your Crypto Transaction on Different Networks",
-          relevance: 0.92
-        }
-      ],
-      blockExplorerUrl: "https://tronscan.org/#/transaction/abc123",
-      securityChecks: {
-        addressFormat: "valid",
-        whitelisted: true,
-        riskScore: "low"
-      }
     }
   })
   @IsOptional()

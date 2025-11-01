@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2025-11-01T08:45:13.886Z",
+    "latencyMs": 3345,
+    "tokens": 287,
+    "tokens_prompt": 179,
+    "tokens_completion": 108,
+    "costUsd": 0.000287,
+    "success": true,
+    "error": null,
+    "confidence": 0.9,
+    "questionSnippet": "Can I send USDT on polygon to BNB chain?"
+  }
+]
