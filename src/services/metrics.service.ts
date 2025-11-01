@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
@@ -17,10 +17,21 @@ export interface MetricEntry {
 }
 
 @Injectable()
-export class MetricsService {
+export class MetricsService implements OnModuleInit {
   private readonly logger = new Logger(MetricsService.name);
   private readonly dir = path.join(process.cwd(), 'metrics');
   private readonly file = path.join(this.dir, 'metrics.json');
+
+  async onModuleInit() {
+    // Clear metrics file on server start so metrics are per-run
+    try {
+      await fs.rm(this.file, { force: true });
+      await this.ensureDir();
+      this.logger.log('Cleared metrics file on startup');
+    } catch (e) {
+      this.logger.error('Failed to clear metrics file on startup', e?.stack || e);
+    }
+  }
 
   private async ensureDir() {
     try {

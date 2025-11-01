@@ -3,6 +3,7 @@ import { QueryRequestDto } from './dto/query-request.dto';
 import { QueryResponseDto } from './dto/query-response.dto';
 import { LLMService } from './services/llm.service';
 import { MetricsService } from './services/metrics.service';
+import { CacheService } from './services/cache.service';
 import { LLMRequest } from './interfaces/llm.interface';
 
 interface CustomerSupportResponse {
@@ -19,11 +20,26 @@ interface CustomerSupportResponse {
 @Injectable()
 export class AppService {
   private readonly logger = new Logger(AppService.name);
-  constructor(private readonly llmService: LLMService, private readonly metricsService: MetricsService) {}
+  constructor(
+    private readonly llmService: LLMService,
+    private readonly metricsService: MetricsService,
+    private readonly cacheService: CacheService
+  ) {}
 
   async processQuery(query: QueryRequestDto): Promise<QueryResponseDto> {
-    // Load the customer support prompt
+    // Load the customer support prompt and prepare request
     const systemPrompt = await this.llmService.loadPrompt('customer-support');
+    const model = 'openai/gpt-3.5-turbo'; // Get from config or request
+
+    // Generate message ID for caching
+    const messageId = this.cacheService.generateMessageId(query.question, model);
+    
+    // Check cache first
+    const cachedResponse = await this.cacheService.get(messageId);
+    if (cachedResponse) {
+      this.logger.log('Returning cached response for message ID: ' + messageId);
+      return cachedResponse;
+    }
 
     // Prepare the LLM request
     const request: LLMRequest = {
@@ -66,7 +82,8 @@ export class AppService {
         this.logger.warn('Failed to record metric', e?.stack || e);
       }
 
-      return {
+      const queryResponse: QueryResponseDto = {
+        messageId,
         answer: response.content.answer,
         confidence,
         recommendedActions: response.content.recommendedActions,
@@ -75,8 +92,13 @@ export class AppService {
           latencyMs: metrics.latencyMs,
           estimatedUsd: metrics.estimatedUsd,
         },
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
+
+      // Cache the response
+      await this.cacheService.set(messageId, queryResponse);
+
+      return queryResponse;
     } catch (error) {
       this.logger.error('Error processing query:', error?.stack || error);
       // record failure metric (best-effort)
