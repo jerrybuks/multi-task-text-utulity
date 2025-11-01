@@ -11,7 +11,7 @@ import { CircuitBreakerService } from './circuit-breaker.service';
 export class LLMService {
   private readonly openai: OpenAI;
   private readonly defaultConfig: LLMConfig = {
-    model: 'openai/gpt-3.5-turbo',
+    model: 'gpt-4o-mini',
     temperature: 0.7,
     max_tokens: 250,
   };
