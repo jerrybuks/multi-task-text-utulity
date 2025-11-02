@@ -4,7 +4,7 @@
 > **Context**: An engineer on a product team building a helper for customer-support agents. The helper must return a concise JSON response for any incoming question so downstream systems can display an answer, a confidence estimate, and recommended actions. [**Product was assumed to be a  Crypto Exchange**]
 
 ## Result
-A production-ready NestJS API designed to augment customer support workflows with AI-powered response processing. It transforms support queries into structured JSON responses with dynamic confidence scoring, recommended actions, and comprehensive safety checks. Built with enterprise-grade features including:
+A production-ready NestJS API designed to augment customer support workflows with AI-powered response processing. Built with enterprise-grade features including:
 
 - **Intelligent Processing**: LLM-powered response generation with dynamic confidence scoring
 - **Enterprise Security**: Multi-layer safety system with PII redaction, content moderation, and channel-specific safety tags
@@ -14,6 +14,8 @@ A production-ready NestJS API designed to augment customer support workflows wit
 - **E2E Tests**: end-to-end test implemented for each of the enpoints to cover a variety of use cases
 
 The service provides a consistent, secure, and monitored interface between support systems and AI models, with built-in safeguards and comprehensive usage analytics.
+
+> 📖 For detailed technical information including system architecture, prompt engineering techniques, metrics analysis, and future improvements, see [Technical Reports](./reports/REPORTS.md).
 
 ## Key Features
 
