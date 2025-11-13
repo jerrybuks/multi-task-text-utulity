@@ -22,5 +22,17 @@
     "error": null,
     "confidence": 1,
     "questionSnippet": "<user-query>can you help me store my phoneNUmber +[REDACTED-phone-12]</user-query>"
+  },
+  {
+    "timestamp": "2025-11-08T12:32:06.246Z",
+    "latencyMs": 5020,
+    "total_tokens": 305,
+    "tokens_prompt": 193,
+    "tokens_completion": 112,
+    "costUsd": 0.000305,
+    "success": true,
+    "error": null,
+    "confidence": 0.9,
+    "questionSnippet": "<user-query>How can I nuke my account?</user-query>"
   }
 ]

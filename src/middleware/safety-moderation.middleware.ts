@@ -15,7 +15,7 @@ export class SafetyModerationMiddleware implements NestMiddleware {
   private readonly MAX_TOKENS = 200; // Reasonable limit for support queries
   private readonly PII_PATTERNS = {
     email: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g,
-    phone: /\b[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}\b/g,
+    phone: /\b(?:\+?\d{1,3}[-.\s]?)?\d{10,14}\b/g,
     privateKey: /\b([0-9a-fA-F]{64}|[5KL][1-9A-HJ-NP-Za-km-z]{50,51})\b/g,
     walletAddress: /\b(0x[a-fA-F0-9]{40}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})\b/g,
   };

@@ -23,13 +23,18 @@ export class MetricsService implements OnModuleInit {
   private readonly file = path.join(this.dir, 'metrics.json');
 
   async onModuleInit() {
-    // Clear metrics file on server start so metrics are per-run
+    // Do NOT clear metrics on startup so that metrics persist across restarts.
+    // Ensure the directory exists and log current status.
     try {
-      await fs.rm(this.file, { force: true });
       await this.ensureDir();
-      this.logger.log('Cleared metrics file on startup');
+      const exists = await fs.stat(this.file).then(() => true).catch(() => false);
+      if (exists) {
+        this.logger.log('Metrics file present on startup — continuing to append to existing metrics');
+      } else {
+        this.logger.log('No metrics file found on startup — a new one will be created when metrics are recorded');
+      }
     } catch (e) {
-      this.logger.error('Failed to clear metrics file on startup', e?.stack || e);
+      this.logger.error('Failed during metrics service initialization', e?.stack || e);
     }
   }
 
